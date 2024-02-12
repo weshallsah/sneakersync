@@ -10,7 +10,9 @@
 .fvm/flutter_sdk
 .packages
 .pub-cache/
+.env
 .pub/
+.idea
 build/
 coverage/
 lib/generated_plugin_registrant.dart
