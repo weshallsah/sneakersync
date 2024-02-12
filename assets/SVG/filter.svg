@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" 
+version="1.1" 
+xmlns:xlink="http://www.w3.org/1999/xlink" 
+width="512" 
+height="512" 
+x="0" 
+y="0" 
+viewBox="0 0 32 32" 
+style="enable-background:new 0 0 512 512" 
+xml:space="preserve" 
+class="">
+    <g>
+    <g fill-rule="evenodd" 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    stroke-miterlimit="4.1">
+    <path d="M21 6.012c-2.407 0-4.432 1.726-4.898 4H3a1 1 0 0 0 0 2h13.102c.466 2.275 2.49 4 4.898 4s4.432-1.725 4.898-4H29a1 1 0 0 0 0-2h-3.102c-.466-2.274-2.49-4-4.898-4zm0 2c1.669 0 3 1.331 3 3s-1.331 3-3 3-3-1.331-3-3 1.331-3 3-3zM11 16.012c-2.407 0-4.432 1.726-4.898 4H3a1 1 0 0 0 0 2h3.102c.466 2.275 2.49 4 4.898 4s4.432-1.725 4.898-4H29a1 1 0 0 0 0-2H15.898c-.466-2.274-2.49-4-4.898-4zm0 2c1.669 0 3 1.331 3 3s-1.331 3-3 3-3-1.331-3-3 1.331-3 3-3z" 
+    fill="#e6000" 
+    opacity="1" 
+    data-original="#000000">
+
+</path>
+</g>
+</g>
+</svg>
