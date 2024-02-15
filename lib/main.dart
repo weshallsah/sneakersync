@@ -1,11 +1,10 @@
-import 'package:bazar/Screen/home/home.screen.dart';
-import 'package:bazar/Screen/myorder/myorder.screen.dart';
-import 'package:bazar/Screen/profile/profile.screen.dart';
 import 'package:bazar/Screen/splash/splash.screen.dart';
 import "package:flutter/material.dart";
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: '.env');
   runApp(MyApp());
 }
 

@@ -2,9 +2,15 @@ import 'package:bazar/controller/auth.controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class singup extends StatelessWidget {
   final Authcontroller authcontroller;
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final username = TextEditingController();
+  final phone = TextEditingController();
+  final fullname = TextEditingController();
   singup(this.authcontroller);
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,7 @@ class singup extends StatelessWidget {
                 height: 40,
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 25),
+                margin: const EdgeInsets.symmetric(horizontal: 25),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "Create an Account",
@@ -35,7 +41,7 @@ class singup extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 25),
+                margin: const EdgeInsets.symmetric(horizontal: 25),
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "enter email address to create an account!",
@@ -46,7 +52,7 @@ class singup extends StatelessWidget {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   horizontal: 30,
                 ),
                 child: CupertinoButton(
@@ -60,7 +66,7 @@ class singup extends StatelessWidget {
                         height: 30,
                         'assets/SVG/google.svg',
                       ),
-                      Text(
+                      const Text(
                         "Continue With Google",
                         style: TextStyle(
                           color: Colors.black,
@@ -76,10 +82,28 @@ class singup extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: fullname,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(15),
+                          ),
+                        ),
+                        labelText: 'fullname',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    child: TextField(
+                      controller: email,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(15),
@@ -89,13 +113,14 @@ class singup extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: username,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(15),
@@ -105,29 +130,31 @@ class singup extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: phone,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(15),
                           ),
                         ),
-                        labelText: 'phone no',
+                        labelText: 'phone',
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: password,
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(15),
@@ -137,20 +164,23 @@ class singup extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  CupertinoButton(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.blue,
-                    onPressed: () {
-                      print("Signup");
-                    },
-                    child: const Text(
-                      'Signup',
-                      style: TextStyle(color: Colors.white, fontSize: 22),
-                    ),
-                  ),
+                  GetBuilder<Authcontroller>(builder: (context) {
+                    return CupertinoButton(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.blue,
+                      onPressed: () {
+                        authcontroller.singup(email.text, fullname.text,
+                            username.text, phone.text, password.text);
+                      },
+                      child: const Text(
+                        'Signup',
+                        style: TextStyle(color: Colors.white, fontSize: 22),
+                      ),
+                    );
+                  }),
                 ],
               ),
             ],

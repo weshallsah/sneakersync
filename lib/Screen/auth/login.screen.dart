@@ -1,22 +1,19 @@
 import 'package:bazar/Screen/auth/register.screen.dart';
 import 'package:bazar/controller/auth.controller.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
-
-  @override
-  State<Login> createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
+class Login extends StatelessWidget {
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final username = TextEditingController();
+  final phone = TextEditingController();
   final Authcontroller authcontroller = Get.put(Authcontroller());
   @override
   Widget build(BuildContext context) {
+    print(email.text);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -83,27 +80,30 @@ class _LoginState extends State<Login> {
             const SizedBox(
               height: 25,
             ),
-            const Padding(
+            Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
+                controller: email,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(15),
                     ),
-                    labelText: 'Email',
-                    hintText: 'abc@gmail.com'),
+                  ),
+                  labelText: 'Email',
+                  hintText: 'abc@gmail.com',
+                ),
               ),
             ),
-            const Padding(
+            Padding(
               padding:
                   EdgeInsets.only(left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: username,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(15),
@@ -122,16 +122,20 @@ class _LoginState extends State<Login> {
                 style: TextStyle(color: Colors.blue, fontSize: 15),
               ),
             ),
-            CupertinoButton(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(15),
-              onPressed: () {
-                print("login");
-              },
-              child: const Text(
-                'Login',
-                style: TextStyle(color: Colors.white, fontSize: 22),
-              ),
+            GetBuilder<Authcontroller>(
+              builder: (context) {
+                return CupertinoButton(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(15),
+                  onPressed: () {
+                     
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white, fontSize: 22),
+                  ),
+                );
+              }
             ),
             Container(
               alignment: Alignment.topCenter,
