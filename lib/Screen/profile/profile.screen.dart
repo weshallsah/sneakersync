@@ -16,19 +16,19 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(),
       body: Container(
-        margin: EdgeInsets.symmetric(
+        margin: const EdgeInsets.symmetric(
           horizontal: 25,
         ),
         child: Column(
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              child: Text(
+              child: const Text(
                 "My Profile",
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Row(
@@ -36,7 +36,7 @@ class _ProfileState extends State<Profile> {
                 SvgPicture.asset(
                   'assets/SVG/avatar.svg',
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 15,
                 ),
                 DoubleText("weshallsah", "vishalk74064@gmail.com", true),

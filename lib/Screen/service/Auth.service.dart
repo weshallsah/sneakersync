@@ -6,11 +6,12 @@ import 'package:bazar/models/user.model.dart';
 
 class AuthService {
   static Future<bool> islogin() async {
-    final user = await APICacheManager()?.getCacheData("Login");
-    if (user != null) {
-      return user.key.isNotEmpty;
-    }
-    return false;
+    return await APICacheManager().isAPICacheKeyExist("Login");
+    
+  }
+
+  static Future<void> deleteuser() async {
+    await APICacheManager().deleteCache("Login");
   }
 
   static Future<UserModel?> getuser() async {

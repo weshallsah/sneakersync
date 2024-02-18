@@ -2,35 +2,34 @@ import 'package:bazar/Screen/profile/profile.screen.dart';
 import 'package:bazar/component/BrandName.component.dart';
 import 'package:bazar/component/Saliding.component.dart';
 import 'package:bazar/component/homeHeader.component.dart';
+import 'package:bazar/controller/home.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Home extends StatefulWidget {
-  const Home({super.key});
+class Home extends StatelessWidget {
+  final HomeController homeController = Get.put(HomeController());
 
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
+   Home({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("sneakersync"),
+        title: const Text("sneakersync"),
         centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
-              Get.to(Profile());
+              Get.to(const Profile());
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.person,
             ),
           ),
           IconButton(
-            onPressed: () {},
-            icon: Icon(
+            onPressed: () async {
+              // await AuthService.deleteuser();
+            },
+            icon: const Icon(
               Icons.explore,
             ),
           ),
@@ -38,34 +37,34 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.sizeOf(context).height * 0.1,
             child: HeaderPage(),
           ),
-          Container(
+          SizedBox(
             height: MediaQuery.sizeOf(context).height * 0.07,
             child: BrandName(),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Container(
             height: MediaQuery.sizeOf(context).height * 0.711,
             // color: Colors.amber,
-            margin: EdgeInsets.symmetric(
+            margin: const EdgeInsets.symmetric(
               horizontal: 15,
             ),
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Saliding(),
-                  SizedBox(
+                  Saliding(homeController),
+                  const SizedBox(
                     height: 15,
                   ),
                   GridView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 15,
                       mainAxisSpacing: 15,

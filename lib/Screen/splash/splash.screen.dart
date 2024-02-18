@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Landing extends StatelessWidget {
-  final SplashController splashController = Get.put(SplashController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,13 +49,7 @@ class Landing extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                         color: Colors.blue,
                         onPressed: () {
-                          if (controller.islogin.value) {
-                            // Get.back();
-                            Navigator.pop(context);
-                            Get.to(Home());
-                          } else {
-                            Get.to(Login());
-                          }
+                          Get.to(Login());
                         },
                         child: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
