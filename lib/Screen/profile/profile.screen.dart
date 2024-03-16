@@ -47,7 +47,7 @@ class _ProfileState extends State<Profile> {
             ProfileButtons("wishlist", "wishlist have 0 items"),
             ProfileButtons("gift Card", "see your gift cards"),
             ProfileButtons("My Review", "Reviewed items"),
-            ProfileButtons("Settings", "Edit profile,password etc")
+            ProfileButtons("Settings", "Edit profile,password etc"),
           ],
         ),
       ),

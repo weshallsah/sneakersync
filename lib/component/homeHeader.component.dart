@@ -1,5 +1,8 @@
+import 'package:bazar/Screen/Cart/Cart.screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class HeaderPage extends StatelessWidget {
   const HeaderPage({super.key});
@@ -9,54 +12,54 @@ class HeaderPage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(
-          flex: 5,
-          child: Container(
-            margin: const EdgeInsets.only(
-              left: 25,
-            ),
-            child: const Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Enjoy New Nike",
-                  style: TextStyle(
-                    fontSize: 28,
-                  ),
+        Container(
+          margin: const EdgeInsets.only(
+            left: 25,
+          ),
+          child: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Enjoy New Nike",
+                style: TextStyle(
+                  fontSize: 28,
                 ),
-                Text(
-                  "Products",
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
+              ),
+              Text(
+                "Products",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-        Expanded(
-          flex: 1,
-          child: InkWell(
-            enableFeedback: true,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(15),
-              bottomLeft: Radius.circular(15),
+        InkWell(
+          borderRadius: BorderRadius.circular(50),
+          onTap: () {
+            Get.to(() => CartPage());
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 10,
             ),
-            onTap: () {},
-            child: Card(
-              margin: const EdgeInsets.all(0),
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    bottomLeft: Radius.circular(15),
-                  ),
-                  color: Colors.blueGrey[200],
-                ),
-                child: SvgPicture.asset('assets/SVG/filter.svg'),
+            height: 35,
+            width: 35,
+            decoration: BoxDecoration(
+              // color: Colors.amber,
+              image: DecorationImage(
+                image: AssetImage("assets/bag.png"),
+              ),
+            ),
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              "+9",
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
               ),
             ),
           ),

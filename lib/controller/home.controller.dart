@@ -1,28 +1,91 @@
 import 'dart:convert';
 
 import 'package:bazar/models/Product.models.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/state_manager.dart';
 import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
-  RxBool isdataloaded = false.obs;
+  RxMap page = {}.obs;
+  RxBool isfocus = false.obs;
   RxBool dataget = false.obs;
-  late RxList list = [].obs;
-  @override
-  Future<List> onReady() async {
-    // late List<Product> list = [];
-    // TODO: implement onInit
-    super.onReady();
-    final res =
-        await http.get(Uri.parse("${dotenv.env['URL']}/product/fetchproduct"));
+  late RxList type = [].obs;
+  late RxList brandname = [].obs;
+  RxBool isLoading = false.obs;
+  late RxMap product = {}.obs;
+  Future<void> reloadproduct(String typename) async {
+    print("loading");
+    if (page.value[typename] == -1) {
+      print("product over");
+      isLoading.value = false;
+      return;
+    }
+    page[typename]++;
+    isLoading.value = true;
+    final res = await http.get(
+      Uri.parse(
+          "${dotenv.env['URL']}/product/fetchproducts?page=${page[typename]}&type=${typename}"),
+    );
     final response = await json.decode(res.body);
-    list.value = response['body'];
-    // print(response['body'][0]);
-    isdataloaded.value = true;
-    refresh();
-    // return list;
-    return response['body'];
+    print(response['body']);
+    if (response['body'].length <= 0) {
+      print("object");
+      page.value[typename] = -1;
+      isLoading.value = false;
+      return;
+    }
+    await product[typename].addAll(response['body']);
+    print(product[typename].length);
+    product.refresh();
+    isLoading.value = false;
+  }
+
+  @override
+  Future<void> onReady() async {
+    final brandres = await http
+        .get(Uri.parse("${dotenv.env['URL']}/product/fetchbrandnames"));
+    final brand = await json.decode(brandres.body);
+    brandname.value = brand['body'];
+    super.onReady();
+    final res = await http.get(
+      Uri.parse("${dotenv.env['URL']}/product/fetchproducttype"),
+    );
+    final response = await json.decode(res.body);
+    type.value = response['body'][0]['uniqueValues'];
+  }
+
+  Future<void> fetchproduct(String typename) async {
+    // print("Function called for ${typename}");
+    page[typename] = 1;
+    final res = await http.get(Uri.parse(
+        "${dotenv.env['URL']}/product/fetchproducts?page=${page[typename]}&type=${typename}"));
+    final list = await json.decode(res.body);
+    product[typename] = list['body'];
   }
 }
+
+// class Productcontroller extends GetxController {
+//   final typename;
+//   RxInt page = 1.obs;
+//   Productcontroller(this.typename);
+//   RxList product = [].obs;
+//   Future<void> fetchproduct() async {
+//     print("Function called for ${typename}");
+//     final res = await http.get(Uri.parse(
+//         "${dotenv.env['URL']}/product/fetchproducts?page=${page}&type=${typename}"));
+//     final list = await json.decode(res.body);
+//     product.value = list['body'];
+//     refresh();
+//   }
+
+//   @override
+//   Future<void> onReady() async {
+//     // TODO: implement onReady
+//     super.onReady();
+//     await fetchproduct();
+//   }
+// }

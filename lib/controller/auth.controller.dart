@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:bazar/Screen/home/home.screen.dart';
 import 'package:bazar/models/user.model.dart';
-import 'package:bazar/Screen/service/Auth.service.dart';
+import 'package:bazar/service/Auth.service.dart';
 import 'package:bazar/utils/Snack.utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
