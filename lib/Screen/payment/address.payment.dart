@@ -1,19 +1,27 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:bazar/Screen/Cart/Cart.screen.dart';
+import 'package:bazar/component/Button.component.dart';
 import 'package:bazar/controller/cart.controller.dart';
 import 'package:bazar/controller/payment.controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get/state_manager.dart';
 
-class Checklist extends StatelessWidget {
+class Address extends StatelessWidget {
   CartController cartController;
-  Checklist(this.cartController, {super.key});
+  Address(this.cartController, {super.key});
   final PaymentController paymentController = Get.put(PaymentController());
+  GlobalKey<ScaffoldState> _formKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _formKey,
       appBar: AppBar(
         title: Text("Sneakersync"),
         elevation: 0,
@@ -168,36 +176,41 @@ class Checklist extends StatelessWidget {
                           ),
                         if (controller.address.length != 0) const Line(),
                         if (controller.address.length != 0)
-                          Container(
-                            width: 180,
-                            height: 60,
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 10,
-                            ),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              // color: Colors.amber,
-                              border: Border.all(
-                                width: 2,
+                          InkWell(
+                            onTap: () {
+                              controller.addAddress(_formKey, false);
+                            },
+                            child: Container(
+                              width: 180,
+                              height: 60,
+                              margin: const EdgeInsets.symmetric(
+                                vertical: 10,
                               ),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: const Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.location_on_outlined,
-                                  size: 30,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                // color: Colors.amber,
+                                border: Border.all(
+                                  width: 2,
                                 ),
-                                Text(
-                                  "Add New Address",
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: const Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.location_on_outlined,
+                                    size: 30,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    "Add New Address",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                       ],
@@ -205,27 +218,40 @@ class Checklist extends StatelessWidget {
                   );
                 },
               ),
-              
-              HeadLine("Contact Info"),
               GetBuilder<PaymentController>(
                 builder: (controller) {
-                  return Container(
-                    height: 170,
-                    width: 350,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 2),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  if (controller.address.length == 0) {
+                    return Container(
+                      margin: EdgeInsets.symmetric(horizontal: 25),
+                      child: FromField(controller, false),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+
+              GetBuilder<PaymentController>(
+                builder: (controller) {
+                  return Obx(
+                    () => Column(
                       children: [
-                        ContactInfo("Email", controller.Email),
-                        ContactInfo("Phone no", controller.Phone),
+                        if (controller.address.length != 0)
+                          HeadLine("Contact Info"),
+                        if (controller.address.length != 0)
+                          Container(
+                            height: 170,
+                            width: 350,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 2),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: FromField(controller, true),
+                          ),
                       ],
                     ),
                   );
@@ -234,40 +260,13 @@ class Checklist extends StatelessWidget {
               const SizedBox(
                 height: 25,
               ),
-              Container(
-                height: 70,
-                alignment: Alignment.center,
-                child: Center(
-                  child: InkWell(
-                    enableFeedback: true,
-                    onTap: () {},
-                    borderRadius: BorderRadius.circular(25),
-                    child: Container(
-                      height: 70,
-                      width: 350,
-                      decoration: BoxDecoration(
-                        // color: Colors.black,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(25),
-                        ),
-                        border: Border.all(
-                          color: Colors.grey,
-                          style: BorderStyle.solid,
-                          width: 2,
-                        ),
-                      ),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        "Placeorder",
-                        style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+              Button(
+                () {
+                  paymentController.placeordered(_formKey);
+                },
+                "Placeorder",
+                null,
+                Colors.transparent,
               ),
               const SizedBox(
                 height: 25,
@@ -276,6 +275,44 @@ class Checklist extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FromField extends StatelessWidget {
+  PaymentController controller;
+  bool iscontect;
+  FromField(this.controller, this.iscontect, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        if (!iscontect)
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: controller.details.length,
+            itemBuilder: (context, index) {
+              return Container(
+                margin: EdgeInsets.symmetric(vertical: 5),
+                child: ContactInfo(controller.details[index],
+                    controller.TextController[index]),
+              );
+            },
+          ),
+        if (!iscontect)
+          SizedBox(
+            height: 5,
+          ),
+        ContactInfo("Phone", controller.Phone),
+        SizedBox(
+          height: 10,
+        ),
+        ContactInfo("Email", controller.Email),
+      ],
     );
   }
 }
@@ -324,12 +361,20 @@ class ContactInfo extends StatelessWidget {
         Container(
           // color: Colors.amber,
           height: 30,
-          child: TextField(
+          child: TextFormField(
             controller: Input,
+            textInputAction: TextInputAction.next,
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
+            validator: (value) {
+              if (value == null && value!.trim().isEmpty) {
+                return "please enter the detail";
+              } else {
+                return null;
+              }
+            },
           ),
         )
       ],

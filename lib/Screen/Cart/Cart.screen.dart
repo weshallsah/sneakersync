@@ -1,4 +1,4 @@
-import 'package:bazar/Screen/payment/paymentgateway.screen.dart';
+import 'package:bazar/Screen/payment/address.payment.dart';
 import 'package:bazar/component/Button.component.dart';
 import 'package:bazar/component/bottomsheet.component.dart';
 import 'package:bazar/controller/cart.controller.dart';
@@ -238,7 +238,7 @@ class CartPage extends StatelessWidget {
             left: 10,
             child: Button(
               () {
-                Get.to(() => Checklist(cartController));
+                Get.to(() => Address(cartController));
               },
               "Checkout",
               null,

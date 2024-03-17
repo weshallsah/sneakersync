@@ -1,4 +1,4 @@
-import 'package:bazar/Screen/payment/paymentgateway.screen.dart';
+import 'package:bazar/Screen/payment/address.payment.dart';
 import 'package:bazar/component/Loading.component.dart';
 import 'package:bazar/controller/splash.controller.dart';
 import "package:flutter/material.dart";

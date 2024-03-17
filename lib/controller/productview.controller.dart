@@ -26,7 +26,7 @@ class Productcontroller extends GetxController {
     );
     final response = json.decode(res.body);
     data.value = response['body'][0];
-    print(data.value);
+    // print(data.value);
     isloaded.value = true;
     // Get.back();
   }

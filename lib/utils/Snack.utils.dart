@@ -5,9 +5,15 @@ void showtoast(GlobalKey<ScaffoldState> _scaffoldKey, String text) {
       .showSnackBar(
     SnackBar(
       behavior: SnackBarBehavior.floating,
+      // width: 250,
+      clipBehavior: Clip.antiAlias,
+      backgroundColor: Colors.black87,
       content: Text(
         text,
-        style: TextStyle(color: Colors.red),
+        style: TextStyle(
+          color: Colors.redAccent,
+          fontSize: 18,
+        ),
       ),
     ),
   );
