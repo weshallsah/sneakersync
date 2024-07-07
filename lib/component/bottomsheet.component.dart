@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:bazar/controller/cart.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,6 +44,7 @@ class bottomsheet extends StatelessWidget {
                     onPressed: () {
                       if (controller.qty.value - 1 >= 0) {
                         controller.qty.value--;
+                        // ignore: invalid_use_of_protected_member
                         controller.refresh();
                       }
                     },
@@ -71,6 +74,7 @@ class bottomsheet extends StatelessWidget {
                     onPressed: () {
                       if (controller.qty.value + 1 <= 10) {
                         controller.qty.value++;
+                        // ignore: invalid_use_of_protected_member
                         controller.refresh();
                       }
                     },

@@ -32,6 +32,7 @@ class Productview extends StatelessWidget {
   // final scaffoldState = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.height*0.4);
     return Scaffold(
       // key: scaffoldState,
       appBar: AppBar(
@@ -63,14 +64,12 @@ class Productview extends StatelessWidget {
                     SizedBox(
                       height: MediaQuery.sizeOf(context).height * 0.489,
                       width: double.infinity,
-                      // color: Colors.amber,
                       child: Image.network(
                         imagecontroller.data['image'],
                         fit: BoxFit.fitWidth,
                       ),
                     ),
                     Container(
-                      //color option
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       height: MediaQuery.sizeOf(context).height * 0.178,
                       width: double.infinity,

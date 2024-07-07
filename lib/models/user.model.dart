@@ -14,7 +14,7 @@ class UserModel {
 
   UserModel.fromJson(Map<String, dynamic> json) {
     username = json['username'];
-    // print(json);
+    print(json['id']);
     id = json['id'];
     // print(json['username']);
     fullname = json['fullname'];

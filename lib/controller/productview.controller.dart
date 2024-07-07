@@ -25,6 +25,7 @@ class Productcontroller extends GetxController {
           "${dotenv.env['URL']}/product/fetchproduct?id=${id}&user=${user?.id}"),
     );
     final response = json.decode(res.body);
+    // print("response :- ${response['body']}");
     data.value = response['body'][0];
     // print(data.value);
     isloaded.value = true;

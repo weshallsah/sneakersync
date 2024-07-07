@@ -1,11 +1,9 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'dart:convert';
 
-import 'package:bazar/models/Product.models.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/state_manager.dart';
 import 'package:http/http.dart' as http;
 
@@ -55,6 +53,7 @@ class HomeController extends GetxController {
       Uri.parse("${dotenv.env['URL']}/product/fetchproducttype"),
     );
     final response = await json.decode(res.body);
+    print(response['body']);
     type.value = response['body'][0]['uniqueValues'];
   }
 

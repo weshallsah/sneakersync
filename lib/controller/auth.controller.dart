@@ -79,9 +79,9 @@ class Authcontroller extends GetxController {
       }
       isloading.value = false;
     } catch (err) {
-      isloading.value = false;
       print(err);
       showtoast(_scaffoldKey, err.toString());
+      isloading.value = false;
     }
   }
 }
