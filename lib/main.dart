@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
-  print(dotenv.env['STRIPE_PUBLIC_KEY']);
+  // print(dotenv.env['STRIPE_PUBLIC_KEY']);
   Stripe.publishableKey = "${dotenv.env['STRIPE_PUBLIC_KEY']}";
   runApp(MyApp());
 }

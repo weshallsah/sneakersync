@@ -1,14 +1,19 @@
+import 'dart:convert';
+
 import 'package:bazar/Screen/payment/paymentgate.payment.dart';
 import 'package:bazar/component/Button.component.dart';
 import 'package:bazar/controller/payment.controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
+import 'package:http/http.dart' as http;
 
 class Checklist extends StatelessWidget {
-  const Checklist({super.key});
-
+  Checklist({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,8 +171,7 @@ class Checklist extends StatelessWidget {
               GetBuilder<PaymentController>(builder: (controller) {
                 return Button(
                   () {
-                    controller.makePayment();
-                    
+                    controller.makePayment(context);
                   },
                   "continue",
                   null,
@@ -237,4 +241,6 @@ class Checklist extends StatelessWidget {
       ),
     );
   }
+  
+  
 }

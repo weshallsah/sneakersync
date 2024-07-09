@@ -8,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
-import 'package:get/state_manager.dart';
 import 'package:http/http.dart' as http;
 
 class PaymentController extends GetxController {
@@ -99,36 +97,27 @@ class PaymentController extends GetxController {
     // print(json.decode(res.body)['body']);
   }
 
-  late final paymentIntent;
-  Future<void> makePayment() async {
+  Map<String, dynamic>? paymentIntent;
+  Future<void> makePayment(BuildContext context) async {
     try {
       paymentIntent = await createpayment('100', 'USD');
+      // print(paymentIntent);
       await Stripe.instance
           .initPaymentSheet(
-              paymentSheetParameters: SetupPaymentSheetParameters(
-                  billingDetails: BillingDetails(
-                    name: address[selected.value]['Name'],
-                    email: Email.text,
-                    phone: Phone.text,
-                    address: Address(
-                        city: address[selected.value]['city'],
-                        country: address[selected.value]['city'],
-                        line1:
-                            "${address[selected.value]['Socity/colony/Room-No']} ${address[selected.value]['LandMark']}",
-                        line2: address[selected.value]['Street Name'],
-                        postalCode: address[selected.value]['pincode'],
-                        state: address[selected.value]['state']),
-                  ),
-                  paymentIntentClientSecret:
-                      paymentIntent!['${user.id}'], //Gotten from payment intent
-                  style: ThemeMode.system,
-                  merchantDisplayName: 'sneakersync'))
-          .then((value) {});
-      // goto payment
-      // print(paymentIntent);
-      await Stripe.instance.presentPaymentSheet();
+        paymentSheetParameters: SetupPaymentSheetParameters(
+            paymentIntentClientSecret: paymentIntent!['client_secret'],
+            style: ThemeMode.dark,
+            merchantDisplayName: 'sneakersync'),
+      )
+          .then((value) {
+        print(value);
+      });
+      //STEP 3: Display Payment sheet
+      displayPaymentSheet(context);
+      print(paymentIntent);
     } catch (err) {
-      throw Exception(err);
+      print("error :- ${err}");
+      // throw Exception(err);
     }
   }
 
@@ -156,6 +145,53 @@ class PaymentController extends GetxController {
       return json.decode(response.body);
     } catch (err) {
       throw Exception(err.toString());
+    }
+  }
+
+  displayPaymentSheet(BuildContext context) async {
+    try {
+      await Stripe.instance.presentPaymentSheet().then((value) {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.check_circle,
+                        color: Colors.green,
+                        size: 100.0,
+                      ),
+                      SizedBox(height: 10.0),
+                      Text("Payment Successful!"),
+                    ],
+                  ),
+                ));
+
+        paymentIntent = null;
+      }).onError((error, stackTrace) {
+        throw Exception(error);
+      });
+    } on StripeException catch (e) {
+      print('Error is:---> $e');
+      AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: const [
+                Icon(
+                  Icons.cancel,
+                  color: Colors.red,
+                ),
+                Text("Payment Failed"),
+              ],
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      print('$e');
     }
   }
 }
